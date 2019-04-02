@@ -34,3 +34,8 @@ x64/Debug/ResultScene.obj
 x64/Debug/vc141.idb
 x64/Debug/vc141.pdb
 x64/Debug/VECTOR2.obj
+.vs/Project1/v15/ipch/AutoPCH/3f370b35c0502d70/MAPCURSOR.ipch
+.vs/Project1/v15/ipch/AutoPCH/553e67cd2ee953a6/GAMESCENE.ipch
+.vs/Project1/v15/ipch/AutoPCH/a0a2d5e3ca8b4245/BASESCENE.ipch
+.vs/Project1/v15/ipch/AutoPCH/c828809f4b7cd619/RESULTSCENE.ipch
+.vs/Project1/v15/ipch/AutoPCH/d4ae4aea9cfd6503/MAPCTRL.ipch
