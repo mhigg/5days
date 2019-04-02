@@ -56,8 +56,6 @@ int SceneMng::GetFrame(void)
 }
 
 
-
-
 int SceneMng::Init(void)
 {
 	SetWindowText("EncampmentGame");

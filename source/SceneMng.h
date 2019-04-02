@@ -2,12 +2,13 @@
 #include <memory>
 #include <list>
 #include "BaseScene.h"
+#include "Player.h"
 #include "GameCtrl.h"
 #include "VECTOR2.h"
 
 class Obj;
 
-using ListObj_itr = std::list<std::unique_ptr<Obj>>::iterator;
+using ListObj_itr = std::list<std::shared_ptr<Obj>>::iterator;
 
 #define lpSceneMng SceneMng::GetInstance()
 
@@ -38,5 +39,8 @@ private:
 
 	unique_Base activeScene;
 	std::unique_ptr<GameCtrl> gameCtrl;
+
+	VECTOR2 plPos;
+	PL_NUMBER player;
 };
 

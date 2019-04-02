@@ -2,6 +2,7 @@
 #include "Obj.h"
 #include "SceneMng.h"
 #include "ImageMng.h"
+#include "classObj.h"
 
 Obj::Obj()
 {
@@ -34,9 +35,9 @@ Obj::~Obj()
 
 }
 
-void Obj::UpDate(const GameCtrl &controller)
+void Obj::UpDate(const GameCtrl &controller, weakListObj objList)
 {
-	SetMove(controller);
+	SetMove(controller, objList);
 }
 
 void Obj::Draw(void)

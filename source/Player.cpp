@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "GameCtrl.h"
 #include "MapCtrl.h"
+#include "MapCursor.h"
+#include "SceneMng.h"
 #include "MAP_ID.h"
 #include "VECTOR2.h"
 
@@ -87,41 +89,53 @@ Player::~Player()
 {
 }
 
-void Player::SetMove(const GameCtrl & controller)
+void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	auto ctrl = controller.GetCtrl(KEY_TYPE_NOW);
 	auto ctrlOld = controller.GetCtrl(KEY_TYPE_OLD);
 
-	// 移動モードの切り替え
-	if (ctrl[keyTbl[PL_KEY_MODE][player]] & ~ctrlOld[keyTbl[PL_KEY_MODE][player]])
+	if (!modeFlag)
 	{
-
-		modeFlag = true;
-	}
-
-	tmpPos = pos;
-
-	// プレイヤーの移動処理
-	auto Move = [&,dir = Player::dir](int keyState, int keyStateOld, int id) {
-		if (keyState & ~keyStateOld)
+		// ワープモードへ切り替え
+		if (ctrl[keyTbl[PL_KEY_MODE][player]] & ~ctrlOld[keyTbl[PL_KEY_MODE][player]])
 		{
-			Player::dir = static_cast<DIR>(id);
-
-			(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+			AddObjList()(objList, std::make_unique<MapCursor>(pos, player, lpSceneMng.GetDrawOffset()));
+			modeFlag = true;
+			return;
 		}
-	};
 
-	for (int id = 0; id < PL_KEY_MAX - 1; id++)
-	{
-		Move(ctrl[keyTbl[id][player]], ctrlOld[keyTbl[id][player]], id);
-	}
+		tmpPos = pos;
 
-	if (pos != tmpPos)
-	{
-		if (tmpPos >= VECTOR2(0, 0) && tmpPos <= VECTOR2(550, 550))
+		// プレイヤーの移動処理
+		auto Move = [&, dir = Player::dir](int keyState, int keyStateOld, int id) {
+			if (keyState & ~keyStateOld)
+			{
+				Player::dir = static_cast<DIR>(id);
+
+				(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+			}
+		};
+
+		for (int id = 0; id < PL_KEY_MAX - 1; id++)
 		{
-			pos = tmpPos;
-			lpMapCtrl.SetMapData(pos, static_cast<MAP_ID>(player + 1));
+			Move(ctrl[keyTbl[id][player]], ctrlOld[keyTbl[id][player]], id);
+		}
+
+		if (pos != tmpPos)
+		{
+			if (tmpPos >= VECTOR2(0, 0) && tmpPos <= VECTOR2(550, 550))
+			{
+				pos = tmpPos;
+				lpMapCtrl.SetMapData(pos, static_cast<MAP_ID>(player + 1));
+			}
+		}
+	}
+	else
+	{
+		if (ctrl[keyTbl[PL_KEY_MODE][player]] & ~ctrlOld[keyTbl[PL_KEY_MODE][player]])
+		{
+			modeFlag = false;
+			return;
 		}
 	}
 }

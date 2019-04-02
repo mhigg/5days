@@ -2,6 +2,7 @@
 #include <array>
 #include "MapCtrl.h"
 #include "Obj.h"
+#include "classObj.h"
 
 #define DEF_SPEED 50
 
@@ -48,7 +49,7 @@ public:
 	~Player();
 
 private:
-	void SetMove(const GameCtrl & controller);
+	void SetMove(const GameCtrl & controller, weakListObj objList);
 
 	PL_NUMBER player;
 	DIR dir;
@@ -59,5 +60,7 @@ private:
 	DIR_TBL_PTR_ARY posTbl;
 	DIR_TBL_ARY		speedTbl;
 	DIR_TBL_DIR_ARY dirTbl;
+
+	sharedListObj objList;
 };
 

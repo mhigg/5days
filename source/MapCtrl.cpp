@@ -48,11 +48,12 @@ bool MapCtrl::SetMapData(const VECTOR2& pos, MAP_ID id)
 {
 	OutputDebugString("SetMapData開始");
 	VECTOR2 mapPos(pos / chipSize);		//自分自身
-	if ((mapPos.x < 0) || (mapPos.y < 0)
-	 || (mapPos.x >= mapSize.x) || (mapPos.y >= mapSize.y))
+	if ((mapPos.x < 0)			 || (mapPos.y < 0)
+	 || (mapPos.x >= mapSize.x)  || (mapPos.y >= mapSize.y))
 	{
 		return false;
 	}
+
 	mapData[mapPos.y][mapPos.x] = id;
 	OutputDebugString("SetMapData終了");
 

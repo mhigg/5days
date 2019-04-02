@@ -25,7 +25,7 @@ int GameScene::Init()
 {
 	if (!objList)
 	{
-		objList = std::make_shared<uniqueObjList>();
+		objList = std::make_shared<sharedObjList>();
 	}
 	objList->clear();
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
@@ -81,8 +81,10 @@ unique_Base GameScene::UpDate(unique_Base own, const GameCtrl & controller)
 		// ƒvƒŒƒCƒ„[‚Ì“®ìˆ—
 		for (auto itr = objList->begin(); itr != objList->end(); itr++)
 		{
-			(*itr)->UpDate(controller);
+			(*itr)->UpDate(controller, objList);
 		}
+
+		objList->remove_if([](sharedObj& obj) { return obj->CheckDeath(); });
 
 		Draw();
 

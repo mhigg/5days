@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include "VECTOR2.h"
+#include "classObj.h"
 
 enum ANIM_TBL {
 	ANIM_TBL_START_ID,		//ｱﾆﾒｰｼｮﾝの開始
@@ -29,7 +30,7 @@ public:
 		VECTOR2 pos
 	);	//画像のﾌｧｲﾙ名,分割ｻｲｽﾞ,分割数の初期化,座標
 	virtual ~Obj();
-	void UpDate(const GameCtrl &controller);	//情報更新	ｺﾝﾄﾛｰﾗｰ自体のﾎﾟｲﾝﾀを渡す
+	void UpDate(const GameCtrl &controller, weakListObj objList);	//情報更新	ｺﾝﾄﾛｰﾗｰ自体のﾎﾟｲﾝﾀを渡す
 	virtual void Draw(void);	//描画
 	void Draw(unsigned int id);	//ID指定描画
 	const VECTOR2 &GetPos(void);	//座標取得関数
@@ -43,9 +44,10 @@ public:
 	);	//ｱﾆﾒｰｼｮﾝの名前,動き,種別,ｺﾏ数,間隔の設定
 	bool SetAnim(std::string animName);
 	std::string GetAnim(void);
+	virtual bool CheckDeath(void) { return false; };	// Player:死亡判定 MapCursor:使用中かどうか
 
 private:
-	virtual void SetMove(const GameCtrl &controller) = 0;
+	virtual void SetMove(const GameCtrl &controller, weakListObj objList) = 0;
 
 	std::string animName;	//表示するｱﾆﾒｰｼｮﾝ名
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;
