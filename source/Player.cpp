@@ -48,13 +48,19 @@ Player::Player()
 
 Player::Player(PL_NUMBER player, VECTOR2 drawOffset) :Obj(drawOffset)
 {
+	skillTbl = {
+//			1P					2P
+		KEY_INPUT_Z,	KEY_INPUT_NUMPAD3,	//SKILL_BOMB
+		KEY_INPUT_X,	KEY_INPUT_NUMPAD2,	//SKILL_STAMP
+		KEY_INPUT_C,	KEY_INPUT_NUMPAD1	//SKILL_NOENTRY
+	};
+
 	keyTbl = {
 //			1P						2P
 		KEY_INPUT_W,		KEY_INPUT_NUMPAD8,		// 上
 		KEY_INPUT_S,		KEY_INPUT_NUMPAD5,		// 下
 		KEY_INPUT_A,		KEY_INPUT_NUMPAD4,		// 左
 		KEY_INPUT_D,		KEY_INPUT_NUMPAD6,		// 右
-		KEY_INPUT_LSHIFT,	KEY_INPUT_RETURN		// 移動モード切り替え用		
 	};
 
 	posTbl = {
@@ -96,13 +102,13 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 
 	if (!modeFlag)
 	{
-		// ワープモードへ切り替え
-		if (ctrl[keyTbl[PL_KEY_MODE][player]] & ~ctrlOld[keyTbl[PL_KEY_MODE][player]])
-		{
-			AddObjList()(objList, std::make_unique<MapCursor>(pos, player, lpSceneMng.GetDrawOffset()));
-			modeFlag = true;
-			return;
-		}
+		// ワープモード ※未実装
+		//if (ctrl[keyTbl[PL_KEY_MODE][player]] & ~ctrlOld[keyTbl[PL_KEY_MODE][player]])
+		//{
+		//	AddObjList()(objList, std::make_unique<MapCursor>(pos, player, lpSceneMng.GetDrawOffset()));
+		//	modeFlag = true;
+		//	return;
+		//}
 
 		tmpPos = pos;
 
@@ -116,26 +122,27 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 			}
 		};
 
-		for (int id = 0; id < PL_KEY_MAX - 1; id++)
+		for (int id = 0; id < DIR_MAX; id++)
 		{
 			Move(ctrl[keyTbl[id][player]], ctrlOld[keyTbl[id][player]], id);
 		}
 
 		if (pos != tmpPos)
 		{
-			if (tmpPos >= VECTOR2(0, 0) && tmpPos <= VECTOR2(550, 550))
+			if (lpMapCtrl.SetMapData(pos, static_cast<MAP_ID>(player + 1)))
 			{
 				pos = tmpPos;
-				lpMapCtrl.SetMapData(pos, static_cast<MAP_ID>(player + 1));
 			}
 		}
 	}
-	else
-	{
-		if (ctrl[keyTbl[PL_KEY_MODE][player]] & ~ctrlOld[keyTbl[PL_KEY_MODE][player]])
-		{
-			modeFlag = false;
-			return;
-		}
-	}
+	//else
+	//{
+		//if (ctrl[keyTbl[PL_KEY_MODE][player]] & ~ctrlOld[keyTbl[PL_KEY_MODE][player]])
+		//{
+		//	modeFlag = false;
+		//	return;
+		//}
+	//}
+
+
 }

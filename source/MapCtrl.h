@@ -47,6 +47,7 @@ public:
 private:
 	MapCtrl();
 	~MapCtrl();
+	void calcArea(void);		// 陣地ﾏｽ数計算
 
 	std::vector<MAP_ID*> mapData;		//配列全域 二次元目
 	std::vector<MAP_ID> mapData_Base;	//ﾎﾟｲﾝﾀ用　一次元目
@@ -54,6 +55,8 @@ private:
 	VECTOR2 mapSize;		//ﾏｯﾌﾟのﾏｽ目数 横方向はx 縦方向はy
 	VECTOR2 chipSize;		//1ﾏｽのｻｲｽﾞ
 	VECTOR2 drawOffset;		//描画時のｵﾌｾｯﾄ
+
+	int mapCnt;
 
 	int bgImage;
 };

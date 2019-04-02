@@ -6,6 +6,14 @@
 
 #define DEF_SPEED 50
 
+
+enum SKILL {
+	SKILL_BOMB,
+	SKILL_STAMP,
+	SKILL_NOENTRY,
+	SKILL_MAX
+};
+
 enum PL_KEY {
 	PL_KEY_UP,
 	PL_KEY_DOWN,
@@ -35,8 +43,9 @@ enum PL_NUMBER {
 	PL_MAX
 };
 
+using SKILL_ARY = std::array<int[PL_MAX], SKILL_MAX>;
 using DIR_TBL_ARY = std::array<int, DIR_MAX>;
-using DIR_TBL_PL_ARY = std::array<int[PL_MAX], PL_KEY_MAX>;
+using DIR_TBL_PL_ARY = std::array<int[DIR_MAX], PL_KEY_MAX>;
 using DIR_TBL_PTR_ARY = std::array<int*[TBL_MAX], DIR_MAX>;
 using DIR_TBL_DIR_ARY = std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
 
@@ -56,6 +65,7 @@ private:
 	VECTOR2 tmpPos;
 	bool modeFlag;		// 移動モードの変更　true:ワープ　false:プレイヤー
 
+	SKILL_ARY skillTbl;
 	DIR_TBL_PL_ARY	keyTbl;
 	DIR_TBL_PTR_ARY posTbl;
 	DIR_TBL_ARY		speedTbl;

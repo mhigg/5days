@@ -2,7 +2,7 @@
 #include "ResultScene.h"
 #include "GameScene.h"
 #include "GameCtrl.h"
-
+#include "MapCtrl.h"
 
 
 ResultScene::ResultScene()

@@ -54,6 +54,11 @@ bool MapCtrl::SetMapData(const VECTOR2& pos, MAP_ID id)
 		return false;
 	}
 
+	if (mapData[mapPos.y][mapPos.x] != id)
+	{
+		return false;
+	}
+
 	mapData[mapPos.y][mapPos.x] = id;
 	OutputDebugString("SetMapDataèIóπ");
 
@@ -164,4 +169,9 @@ MapCtrl::MapCtrl()
 
 MapCtrl::~MapCtrl()
 {
+}
+
+void MapCtrl::calcArea(void)
+{
+
 }
