@@ -15,14 +15,6 @@ enum SKILL {
 	SKILL_MAX
 };
 
-enum DIR_TBL_ID {
-	DIR_TBL_MAIN,			// ‰Ÿ‚µ‚Ä‚¢‚é·°‚Ì•ûŒü
-	DIR_TBL_OPP,			// DIR_TBL_MAIN‚Ì”½‘Î•ûŒü
-	DIR_TBL_SUB1,			// Ž²‚ªˆá‚¤•ûŒü‚P
-	DIR_TBL_SUB2,			// Ž²‚ªˆá‚¤•ûŒü‚Q
-	DIR_TBL_MAX
-};
-
 enum TBL_ID {
 	TBL_MAIN,
 	TBL_SUB,
@@ -39,7 +31,6 @@ using SKILL_ARY = std::array<int[PL_MAX], SKILL_MAX>;
 using DIR_TBL_ARY = std::array<int, DIR_MAX>;
 using DIR_TBL_PL_ARY = std::array<int[PL_MAX], DIR_MAX>;
 using DIR_TBL_PTR_ARY = std::array<int*[TBL_MAX], DIR_MAX>;
-using DIR_TBL_DIR_ARY = std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
 
 class Player :
 	public Obj
@@ -61,7 +52,6 @@ private:
 	DIR_TBL_PL_ARY	keyTbl;
 	DIR_TBL_PTR_ARY posTbl;
 	DIR_TBL_ARY		speedTbl;
-	DIR_TBL_DIR_ARY dirTbl;
 
 	sharedListObj objList;
 };

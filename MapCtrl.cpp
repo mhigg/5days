@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "ImageMng.h"
 #include "SceneMng.h"
+#include "StageMng.h"
 #include "Player.h"
 #include "MapCtrl.h"
 #include "MAP_ID.h"
@@ -35,11 +36,11 @@ bool MapCtrl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR
 		mapData_Base[j] = MAP_ID::NON;
 	}
 
-	if (bgImage <= 0)
-	{
-		VECTOR2 scrSize = lpSceneMng.GetScreenSize();
-		bgImage = MakeScreen(scrSize.x, scrSize.y, false);
-	}
+	VECTOR2 scrSize = lpSceneMng.GetScreenSize();
+	// 陣地描画用
+	bgImage = MakeScreen(scrSize.x, scrSize.y, false);
+
+	lpStageMng.SetMapSize(MapCtrl::mapSize);
 
 	return true;
 }
@@ -48,8 +49,8 @@ bool MapCtrl::SetMapData(const VECTOR2& pos, MAP_ID id)
 {
 	OutputDebugString("SetMapData開始");
 	VECTOR2 mapPos(pos / chipSize);		//自分自身
-	if ((mapPos.x < 0) || (mapPos.y < 0)
-		|| (mapPos.x >= mapSize.x) || (mapPos.y >= mapSize.y))
+	if ((mapPos.x < 0)			|| (mapPos.y < 0)
+	 || (mapPos.x >= mapSize.x) || (mapPos.y >= mapSize.y))
 	{
 		return false;
 	}
@@ -60,6 +61,7 @@ bool MapCtrl::SetMapData(const VECTOR2& pos, MAP_ID id)
 	//}
 
 	mapData[mapPos.y][mapPos.x] = id;
+
 	OutputDebugString("SetMapData終了");
 
 	return true;
@@ -164,9 +166,4 @@ MapCtrl::MapCtrl()
 
 MapCtrl::~MapCtrl()
 {
-}
-
-void MapCtrl::calcArea(void)
-{
-
 }

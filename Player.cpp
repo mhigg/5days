@@ -5,6 +5,7 @@
 #include "MapCtrl.h"
 #include "MapCursor.h"
 #include "SceneMng.h"
+#include "StageMng.h"
 #include "MAP_ID.h"
 #include "VECTOR2.h"
 
@@ -32,14 +33,6 @@ Player::Player()
 		DEF_SPEED		// 下
 		- DEF_SPEED,		// 左
 		DEF_SPEED		// 右
-	};
-
-	dirTbl = {
-//		MAIN			OPP				SUB1			SUB2
-		DIR_UP,			DIR_DOWN,		DIR_LEFT,		DIR_RIGHT,	// 上
-		DIR_DOWN,		DIR_UP,			DIR_LEFT,		DIR_RIGHT,	// 下
-		DIR_LEFT,		DIR_RIGHT,		DIR_UP,			DIR_DOWN,	// 左
-		DIR_RIGHT,		DIR_LEFT,		DIR_UP,			DIR_DOWN	// 右
 	};
 
 	dir = DIR_DOWN;
@@ -79,13 +72,6 @@ Player::Player(PL_NUMBER player, VECTOR2 drawOffset) :Obj(drawOffset)
 		 DEF_SPEED		// 右
 	};
 
-	dirTbl = {
-//		MAIN			OPP				SUB1			SUB2
-		DIR_UP,			DIR_DOWN,		DIR_LEFT,		DIR_RIGHT,	// 上
-		DIR_DOWN,		DIR_UP,			DIR_LEFT,		DIR_RIGHT,	// 下
-		DIR_LEFT,		DIR_RIGHT,		DIR_UP,			DIR_DOWN,	// 左
-		DIR_RIGHT,		DIR_LEFT,		DIR_UP,			DIR_DOWN	// 右
-	};
 
 	dir = DIR_DOWN;
 	(*this).player = player;
@@ -131,10 +117,14 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 
 		if (pos != tmpPos)
 		{
-			if (lpMapCtrl.SetMapData(tmpPos, static_cast<MAP_ID>(player + 1)))
+			if ((tmpPos.x <  GAME_SCREEN_X)		 || (tmpPos.y <  GAME_SCREEN_Y)
+			 || (tmpPos.x >= GAME_SCREEN_SIZE_X) || (tmpPos.y >= GAME_SCREEN_SIZE_Y))
 			{
-				pos = tmpPos;
+				return;
 			}
+			lpStageMng.AddMapCnt(player, tmpPos);
+			lpMapCtrl.SetMapData(tmpPos, static_cast<MAP_ID>(player + 1));
+			pos = tmpPos;
 		}
 	}
 	//else
