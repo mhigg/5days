@@ -129,7 +129,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 
 		if (pos != tmpPos)
 		{
-			if (lpMapCtrl.SetMapData(pos, static_cast<MAP_ID>(player + 1)))
+			if (lpMapCtrl.SetMapData(tmpPos, static_cast<MAP_ID>(player + 1)))
 			{
 				pos = tmpPos;
 			}
